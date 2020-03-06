@@ -1,0 +1,61 @@
+.breeds {
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    top: 1rem;
+    bottom: 1rem;
+    color: darkcyan;
+}
+
+.breeds .selection {
+    display: flex;
+    margin-left: 3.5rem;
+    margin-bottom: 2rem;
+}
+
+.breeds .selection .search-box {
+    height: 2rem;
+    flex-grow: 1!important;
+    margin-right: 2rem;
+    min-width: 20rem;
+    width: 20rem;
+    border: solid 0.0625rem darkcyan;
+}
+
+.breeds .selection .origin-select {
+    height: 2rem;
+    border: solid 0.0625rem darkcyan;
+}
+
+.breeds .app-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.breeds .breeds-list {
+    background: transparent;
+}
+
+.breeds .breeds-list .breed-list-item {
+    display: flex;
+    height: 2.5rem;
+}
+
+.breeds .breeds-list .breed-list-item .name,
+.breeds .breeds-list .breed-list-item .temperament,
+.breeds .breeds-list .breed-list-item .origin {
+    width: 12rem;
+    min-width: 12rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 1rem;
+}
+
+.breeds .breeds-list .breed-list-item .description {
+    min-width: 12rem;
+    flex-grow: 1!important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
