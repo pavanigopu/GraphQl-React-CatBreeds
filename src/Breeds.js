@@ -31,9 +31,9 @@ class Breeds extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.getOrigins();
-        this.loadAllBreeds();
+    async componentDidMount() {
+        await this.getOrigins();        
+        await this.loadAllBreeds();
     }
 
     render() {
@@ -45,7 +45,7 @@ class Breeds extends React.Component {
                     <select className="origin-select" value={this.state.value} onChange={this.handleOriginChange}>
                         <option value="Choose origin">Choose origin</option>
                         {this.state.origins.map(origin => 
-                            <option value={origin}>{origin}</option>
+                            <option key={origin} value={origin}>{origin}</option>
                         )}
                     </select>
                 </div>
@@ -69,32 +69,15 @@ class Breeds extends React.Component {
         );
     };
 
-    getOrigins() {
+    async getOrigins() {
         const requestBody = {
             query: `{origins}`
         };
-        fetch("http://localhost:5000/graphql", {
-            method: "POST",
-            body: JSON.stringify(requestBody),
-            headers: {
-                "Content-type": "application/json"
-            }
-        })
-        .then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-                throw new Error("Failed");
-            }
-            return res.json();
-        })
-        .then(resData => {
-            this.setState({ origins: resData.data.origins });           
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        const res = await this.fetchData(requestBody);
+        this.setState({ origins: res.origins });
     }
 
-    loadAllBreeds() {
+    async loadAllBreeds() {
         const requestBody = {
             query: `{
                 breeds {
@@ -107,10 +90,11 @@ class Breeds extends React.Component {
             }`
         };
 
-       this.loadBreeds(requestBody);        
+        const res = await this.fetchData(requestBody);
+        this.setState({ breeds: res.breeds });       
     }
 
-    filterBreeds(search, origin) {
+    async filterBreeds(search, origin) {
         const requestBody = {
             query: `{
                 filterBreeds(search: "${search}", origin: "${origin}") {
@@ -123,11 +107,12 @@ class Breeds extends React.Component {
             }`
         };
 
-        this.loadBreeds(requestBody);
+        const res = await this.fetchData(requestBody);
+        this.setState({ breeds: res.filterBreeds });
     }
 
-    loadBreeds(requestBody) {
-        fetch("http://localhost:5000/graphql", {
+    fetchData(requestBody) {
+        return fetch("http://localhost:5000/graphql", {
             method: "POST",
             body: JSON.stringify(requestBody),
             headers: {
@@ -141,13 +126,7 @@ class Breeds extends React.Component {
             return res.json();
         })
         .then(resData => {
-            if (resData.data.breeds) {
-                const breeds = resData.data.breeds;
-                this.setState({ breeds: breeds });
-            } else if (resData.data.filterBreeds) {
-                const breeds = resData.data.filterBreeds;
-                this.setState({ breeds: breeds });
-            }
+            return resData.data;
         })
         .catch(err => {
             console.log(err);
