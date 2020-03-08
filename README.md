@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This is a very simple cat breeds application developed with React.js. The application can be accessed from localhost at PORT 3000.
 
+![Desktop](Desktop.jpg)
+
+![Mobile](Mobile.jpg)
+
 # Get started
 
 1. Install [Node.js](https://nodejs.org/en/download/current/).
